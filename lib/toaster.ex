@@ -6,11 +6,15 @@ defmodule Toaster do
   """
   @spec get_scenario_titles(String.t) :: [String.t]
   def get_scenario_titles(dir) do
+    scenarios = process_feature_files(dir, &parse_feature_file/1)
+    List.flatten(scenarios)
+  end
+
+  def process_feature_files(dir, fun) do
     feature_files = :filelib.fold_files(dir, ".*\.feature$", false,
       fn(filename, acc) -> [filename|acc] end, [])
 
-    scenarios = for file <- feature_files, do: parse_feature_file(file)
-    List.flatten(scenarios)
+    for file <- feature_files, do: fun.(file)
   end
 
   # defp output_feature_files(path, []), do: "No feature files in #{path}"
@@ -22,7 +26,6 @@ defmodule Toaster do
     {:ok, file} = File.open(filepath, [:read])
     scenarios = Enum.reduce(File.stream!(filepath, [:read, :utf8]), [], &match_scenario_title/2)
     File.close(file)
-    IO.inspect scenarios
     scenarios
   end
 

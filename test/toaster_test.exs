@@ -4,16 +4,11 @@ defmodule ToasterTest do
 
   @feature_filepath __DIR__ <> "/resources"
 
-  test "pulls out scenario titles from feature file" do
+  test "pulls out scenario titles from feature file as a list" do
 
     titles = Toaster.get_scenario_titles(@feature_filepath)
 
-    expected = [
-      "Updating member email to the email of an existing member",
-      "Update Password and Password Confirm doesn't match"
-    ]
-
-    assert titles == expected
+    assert Enum.member?(titles, "Updating member email to the email of an existing member")
+    assert Enum.member?(titles, "Update Password and Password Confirm doesn't match")
   end
-
 end

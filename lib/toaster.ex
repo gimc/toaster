@@ -17,11 +17,6 @@ defmodule Toaster do
     for file <- feature_files, do: fun.(file)
   end
 
-  # defp output_feature_files(path, []), do: "No feature files in #{path}"
-  # defp output_feature_files(path, file_list) do
-  #   Enum.reduce(file_list, "", fn (filename, acc) -> acc <> ~s/#{filename}\n/ end)
-  # end
-
   def parse_feature_file(filepath) do
     {:ok, file} = File.open(filepath, [:read])
     scenarios = Enum.reduce(File.stream!(filepath, [:read, :utf8]), [], &match_scenario_title/2)

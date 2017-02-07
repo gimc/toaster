@@ -1,5 +1,5 @@
 defmodule ToasterTest.Contexts.Update do
-  when_ ~r/^I do something without matching$/, fn state ->
+  given_ ~r/^I do something without matching$/, fn state ->
     {:ok, state}
   end
 
@@ -28,17 +28,12 @@ defmodule ToasterTest.Contexts.Update do
     {:ok, state}
   end
 
-  and_ ~r/^I set the property "(?<property>[^"]+)" to ""$/,
-  fn state, %{property: property} ->
-    {:ok, state}
-  end
-
-  and_ ~r/^I set the property "(?<property>[^"]+)" to "(?<value>[^"]+)"$/,
+  when_ ~r/^I set the property "(?<property>[^"]+)" to "(?<value>[^"]+)"$/,
   fn state, %{property: property, value: value} ->
     {:ok, state}
   end
 
-  and_ ~r/^I add the property "(?<property>[^"]+)" with value "(?<value>[^"]*)" to the changeset$/,
+  and_ ~r/^I set the property "(?<property>[^"]+)" to "(?<value>[^"]+)"$/,
   fn state, %{property: property, value: value} ->
     {:ok, state}
   end
